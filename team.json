@@ -1,0 +1,15 @@
+{
+  "team_number": "",
+  "group_lead": {
+    "name": "Prachi Choubey",
+    "enrollment_no": "",
+    "github": "astrochoubey"
+  },
+  "members": [
+    { "name": "", "enrollment_no": "", "github": "" },
+    { "name": "", "enrollment_no": "", "github": "" },
+    { "name": "", "enrollment_no": "", "github": "" }
+  ],
+  "postgres_version": "18",
+  "laptop_used_for_benchmarks": "Apple MacBook"
+}
