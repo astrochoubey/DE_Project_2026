@@ -1,22 +1,6 @@
--- =====================================================================
--- Uber Ride-Hailing Database: DDL Schema Specification (Phase 2)
--- Course: Database Management Systems (DE Project)
--- Database: PostgreSQL 15 or newer
--- Schema: uber
---
--- This script defines all 8 core tables with appropriate data types,
--- primary keys, foreign keys (with explicit ON DELETE actions), unique
--- constraints, nullability rules, and domain CHECK constraints.
---
--- Note on Indexing: Per Phase 2 guidelines, only constraints (PK, FK,
--- UNIQUE, NOT NULL, CHECK) are declared here. No secondary tuning
--- indexes are added yet so that Phase 3 baseline measurements remain clean.
--- =====================================================================
-
 CREATE SCHEMA IF NOT EXISTS uber;
 SET search_path TO uber;
 
--- Drop existing tables in reverse topological order for clean replayability
 DROP TABLE IF EXISTS ratings CASCADE;
 DROP TABLE IF EXISTS payments CASCADE;
 DROP TABLE IF EXISTS trips CASCADE;
@@ -26,9 +10,6 @@ DROP TABLE IF EXISTS riders CASCADE;
 DROP TABLE IF EXISTS promo_codes CASCADE;
 DROP TABLE IF EXISTS cities CASCADE;
 
--- =====================================================================
--- 1. CITIES (Operational Hubs & Base Fare Tariff)
--- =====================================================================
 CREATE TABLE cities (
     city_id         INT PRIMARY KEY,
     city_name       VARCHAR(50) NOT NULL UNIQUE,
@@ -42,9 +23,6 @@ CREATE TABLE cities (
     CONSTRAINT chk_cities_min_rate CHECK (per_min_rate >= 0)
 );
 
--- =====================================================================
--- 2. PROMO_CODES (Marketing Discounts & Campaigns)
--- =====================================================================
 CREATE TABLE promo_codes (
     promo_code      VARCHAR(20) PRIMARY KEY,
     discount_pct    INT NOT NULL,
@@ -57,9 +35,6 @@ CREATE TABLE promo_codes (
     CONSTRAINT chk_promo_validity_dates CHECK (valid_to >= valid_from)
 );
 
--- =====================================================================
--- 3. RIDERS (Customer Accounts)
--- =====================================================================
 CREATE TABLE riders (
     rider_id        INT PRIMARY KEY,
     full_name       VARCHAR(100) NOT NULL,
@@ -73,9 +48,6 @@ CREATE TABLE riders (
     CONSTRAINT chk_riders_rating CHECK (rider_rating IS NULL OR (rider_rating >= 1.0 AND rider_rating <= 5.0))
 );
 
--- =====================================================================
--- 4. DRIVERS (Driver Partners)
--- =====================================================================
 CREATE TABLE drivers (
     driver_id       INT PRIMARY KEY,
     full_name       VARCHAR(100) NOT NULL,
@@ -90,9 +62,6 @@ CREATE TABLE drivers (
     CONSTRAINT chk_drivers_status CHECK (status IN ('ACTIVE', 'INACTIVE', 'SUSPENDED'))
 );
 
--- =====================================================================
--- 5. VEHICLES (Driver Vehicle Fleet Assets)
--- =====================================================================
 CREATE TABLE vehicles (
     vehicle_id        INT PRIMARY KEY,
     driver_id         INT NOT NULL REFERENCES drivers(driver_id) ON DELETE RESTRICT,
@@ -114,9 +83,6 @@ CREATE TABLE vehicles (
     )
 );
 
--- =====================================================================
--- 6. TRIPS (Core Transaction Engine)
--- =====================================================================
 CREATE TABLE trips (
     trip_id           BIGINT PRIMARY KEY,
     rider_id          INT NOT NULL REFERENCES riders(rider_id) ON DELETE RESTRICT,
@@ -165,9 +131,6 @@ CREATE TABLE trips (
     )
 );
 
--- =====================================================================
--- 7. PAYMENTS (Financial Ledger & Settlements)
--- =====================================================================
 CREATE TABLE payments (
     payment_id      INT PRIMARY KEY,
     trip_id         BIGINT NOT NULL UNIQUE REFERENCES trips(trip_id) ON DELETE CASCADE,
@@ -180,9 +143,6 @@ CREATE TABLE payments (
     CONSTRAINT chk_payments_status CHECK (payment_status IN ('SUCCESS', 'FAILED', 'REFUNDED'))
 );
 
--- =====================================================================
--- 8. RATINGS (Two-Sided Service Quality Reviews)
--- =====================================================================
 CREATE TABLE ratings (
     trip_id         BIGINT NOT NULL REFERENCES trips(trip_id) ON DELETE CASCADE,
     rated_by        VARCHAR(10) NOT NULL,
