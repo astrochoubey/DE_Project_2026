@@ -22,10 +22,10 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | Prachi Choubey | | astrochoubey |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead | Prachi Choubey | 2501010337 | astrochoubey |
+| Member 2 | Kushagra Sharma | 2501010240 | nottkushagra |
+| Member 3 | Priyanshu Srivastava | 2501010644 | Priyanshuuu777 |
+| Member 4 | Nitya Pawar | 2501010683 | nityapawar495-sys |
 
 **Team No.:** ____ · **Section:** ____ · **Repository URL:** https://github.com/astrochoubey/DE_Project_2026.git
 
