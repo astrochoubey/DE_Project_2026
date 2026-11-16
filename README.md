@@ -20,6 +20,8 @@
 
 ## Team details (fill in before you start)
 
+**Team Name:** Brutus
+
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
 | Group Lead | Prachi Choubey | 2501010337 | astrochoubey |
@@ -27,7 +29,7 @@
 | Member 3 | Priyanshu Srivastava | 2501010644 | Priyanshuuu777 |
 | Member 4 | Nitya Pawar | 2501010683 | nityapawar495-sys |
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** https://github.com/astrochoubey/DE_Project_2026.git
+**Team No.:** T0141 · **Section:** C · **Repository URL:** https://github.com/astrochoubey/DE_Project_2026.git
 
 ---
 
