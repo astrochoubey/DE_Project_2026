@@ -1,3 +1,4 @@
+\set ON_ERROR_STOP on
 CREATE SCHEMA IF NOT EXISTS uber;
 SET search_path TO uber;
 
@@ -117,7 +118,7 @@ CREATE TABLE trips (
         'CANCELLED_BY_RIDER', 'CANCELLED_BY_DRIVER'
     )),
     CONSTRAINT chk_trips_timeline_pickup CHECK (pickup_at IS NULL OR pickup_at >= requested_at),
-    CONSTRAINT chk_trips_timeline_dropoff CHECK (dropoff_at IS NULL OR pickup_at IS NULL OR dropoff_at >= pickup_at),
+    CONSTRAINT chk_trips_timeline_dropoff CHECK (dropoff_at IS NULL OR (pickup_at IS NOT NULL AND dropoff_at >= pickup_at)),
     CONSTRAINT chk_trips_completed_integrity CHECK (
         status != 'COMPLETED' OR (
             driver_id IS NOT NULL AND
