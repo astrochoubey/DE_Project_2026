@@ -1,0 +1,45 @@
+=== R09 run 1 ===
+Seq Scan on riders r  (cost=6469.54..7292.54 rows=2400 width=41) (actual time=11.748..13.844 rows=893.00 loops=1)
+  Filter: ((NOT (ANY (rider_id = (hashed SubPlan 1).col1))) AND (home_city_id = 1))
+  Rows Removed by Filter: 29107
+  Buffers: shared hit=1582 read=163
+  SubPlan 1
+    ->  Index Only Scan using idx_trips_city_month_rider on trips t  (cost=0.42..6347.04 rows=49003 width=4) (actual time=0.254..8.730 rows=50000.00 loops=1)
+          Index Cond: (requested_at >= '2026-04-01 00:00:00+05:30'::timestamp with time zone)
+          Heap Fetches: 5880
+          Index Searches: 11
+          Buffers: shared hit=1209 read=163
+Planning:
+  Buffers: shared hit=256
+Planning Time: 0.519 ms
+Execution Time: 13.894 ms
+=== R09 run 2 ===
+Seq Scan on riders r  (cost=6469.54..7292.54 rows=2400 width=41) (actual time=5.554..7.626 rows=893.00 loops=1)
+  Filter: ((NOT (ANY (rider_id = (hashed SubPlan 1).col1))) AND (home_city_id = 1))
+  Rows Removed by Filter: 29107
+  Buffers: shared hit=1745
+  SubPlan 1
+    ->  Index Only Scan using idx_trips_city_month_rider on trips t  (cost=0.42..6347.04 rows=49003 width=4) (actual time=0.033..2.659 rows=50000.00 loops=1)
+          Index Cond: (requested_at >= '2026-04-01 00:00:00+05:30'::timestamp with time zone)
+          Heap Fetches: 5880
+          Index Searches: 11
+          Buffers: shared hit=1372
+Planning:
+  Buffers: shared hit=256
+Planning Time: 0.400 ms
+Execution Time: 7.674 ms
+=== R09 run 3 ===
+Seq Scan on riders r  (cost=6469.54..7292.54 rows=2400 width=41) (actual time=5.447..7.662 rows=893.00 loops=1)
+  Filter: ((NOT (ANY (rider_id = (hashed SubPlan 1).col1))) AND (home_city_id = 1))
+  Rows Removed by Filter: 29107
+  Buffers: shared hit=1745
+  SubPlan 1
+    ->  Index Only Scan using idx_trips_city_month_rider on trips t  (cost=0.42..6347.04 rows=49003 width=4) (actual time=0.036..2.557 rows=50000.00 loops=1)
+          Index Cond: (requested_at >= '2026-04-01 00:00:00+05:30'::timestamp with time zone)
+          Heap Fetches: 5880
+          Index Searches: 11
+          Buffers: shared hit=1372
+Planning:
+  Buffers: shared hit=256
+Planning Time: 0.602 ms
+Execution Time: 7.709 ms

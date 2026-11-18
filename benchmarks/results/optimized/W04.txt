@@ -1,0 +1,33 @@
+=== W04 run 1 ===
+Insert on trips  (cost=0.00..150.00 rows=0 width=0) (actual time=52.812..52.813 rows=0.00 loops=1)
+  Buffers: shared hit=79303 read=1153 dirtied=2468 written=705
+  ->  Function Scan on generate_series g  (cost=0.00..150.00 rows=5000 width=284) (actual time=0.116..0.728 rows=5000.00 loops=1)
+Planning Time: 0.055 ms
+Trigger for constraint trips_rider_id_fkey: time=10.054 calls=5000
+Trigger for constraint trips_driver_id_fkey: time=1.084 calls=5000
+Trigger for constraint trips_vehicle_id_fkey: time=0.943 calls=5000
+Trigger for constraint trips_city_id_fkey: time=8.039 calls=5000
+Trigger for constraint trips_promo_code_fkey: time=1.047 calls=5000
+Execution Time: 74.575 ms
+=== W04 run 2 ===
+Insert on trips  (cost=0.00..150.00 rows=0 width=0) (actual time=45.020..45.020 rows=0.00 loops=1)
+  Buffers: shared hit=93083 dirtied=124 written=126
+  ->  Function Scan on generate_series g  (cost=0.00..150.00 rows=5000 width=284) (actual time=0.126..0.776 rows=5000.00 loops=1)
+Planning Time: 0.064 ms
+Trigger for constraint trips_rider_id_fkey: time=13.467 calls=5000
+Trigger for constraint trips_driver_id_fkey: time=1.077 calls=5000
+Trigger for constraint trips_vehicle_id_fkey: time=0.948 calls=5000
+Trigger for constraint trips_city_id_fkey: time=8.001 calls=5000
+Trigger for constraint trips_promo_code_fkey: time=1.055 calls=5000
+Execution Time: 70.163 ms
+=== W04 run 3 ===
+Insert on trips  (cost=0.00..150.00 rows=0 width=0) (actual time=31.327..31.328 rows=0.00 loops=1)
+  Buffers: shared hit=92883 dirtied=66 written=66
+  ->  Function Scan on generate_series g  (cost=0.00..150.00 rows=5000 width=284) (actual time=0.119..0.721 rows=5000.00 loops=1)
+Planning Time: 0.054 ms
+Trigger for constraint trips_rider_id_fkey: time=13.509 calls=5000
+Trigger for constraint trips_driver_id_fkey: time=1.103 calls=5000
+Trigger for constraint trips_vehicle_id_fkey: time=0.957 calls=5000
+Trigger for constraint trips_city_id_fkey: time=8.196 calls=5000
+Trigger for constraint trips_promo_code_fkey: time=1.073 calls=5000
+Execution Time: 56.762 ms

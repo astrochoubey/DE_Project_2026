@@ -1,0 +1,42 @@
+=== R05 run 1 ===
+Limit  (cost=1088.76..1088.89 rows=50 width=31) (actual time=0.274..0.277 rows=50.00 loops=1)
+  Buffers: shared hit=20 read=3
+  ->  Sort  (cost=1088.76..1089.69 rows=370 width=31) (actual time=0.274..0.275 rows=50.00 loops=1)
+        Sort Key: requested_at
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=20 read=3
+        ->  Index Scan using idx_trips_status_active on trips  (cost=0.27..1076.47 rows=370 width=31) (actual time=0.209..0.247 rows=300.00 loops=1)
+              Index Searches: 1
+              Buffers: shared hit=17 read=3
+Planning:
+  Buffers: shared hit=261
+Planning Time: 0.360 ms
+Execution Time: 0.288 ms
+=== R05 run 2 ===
+Limit  (cost=1088.76..1088.89 rows=50 width=31) (actual time=0.067..0.070 rows=50.00 loops=1)
+  Buffers: shared hit=23
+  ->  Sort  (cost=1088.76..1089.69 rows=370 width=31) (actual time=0.066..0.068 rows=50.00 loops=1)
+        Sort Key: requested_at
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=23
+        ->  Index Scan using idx_trips_status_active on trips  (cost=0.27..1076.47 rows=370 width=31) (actual time=0.006..0.039 rows=300.00 loops=1)
+              Index Searches: 1
+              Buffers: shared hit=20
+Planning:
+  Buffers: shared hit=261
+Planning Time: 0.375 ms
+Execution Time: 0.082 ms
+=== R05 run 3 ===
+Limit  (cost=1088.76..1088.89 rows=50 width=31) (actual time=0.062..0.065 rows=50.00 loops=1)
+  Buffers: shared hit=23
+  ->  Sort  (cost=1088.76..1089.69 rows=370 width=31) (actual time=0.062..0.063 rows=50.00 loops=1)
+        Sort Key: requested_at
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=23
+        ->  Index Scan using idx_trips_status_active on trips  (cost=0.27..1076.47 rows=370 width=31) (actual time=0.005..0.036 rows=300.00 loops=1)
+              Index Searches: 1
+              Buffers: shared hit=20
+Planning:
+  Buffers: shared hit=261
+Planning Time: 0.357 ms
+Execution Time: 0.076 ms

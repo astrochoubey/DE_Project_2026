@@ -1,0 +1,57 @@
+=== R23 run 1 ===
+GroupAggregate  (cost=1469.92..17874.96 rows=97825 width=20) (actual time=4.747..33.608 rows=60.00 loops=1)
+  Group Key: city_id, (date_trunc('month'::text, requested_at))
+  Buffers: shared hit=2386 read=206
+  ->  Incremental Sort  (cost=1469.92..15918.46 rows=97825 width=16) (actual time=4.594..29.956 rows=99450.00 loops=1)
+        Sort Key: city_id, (date_trunc('month'::text, requested_at)), rider_id
+        Presorted Key: city_id
+        Full-sort Groups: 10  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+        Pre-sorted Groups: 10  Sort Method: quicksort  Average Memory: 1006kB  Peak Memory: 1007kB
+        Buffers: shared hit=2386 read=206
+        ->  Index Only Scan using idx_trips_city_month_rider on trips  (cost=0.42..8211.61 rows=97825 width=16) (actual time=0.220..14.902 rows=99450.00 loops=1)
+              Index Cond: (requested_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone)
+              Heap Fetches: 11249
+              Index Searches: 11
+              Buffers: shared hit=2380 read=206
+Planning:
+  Buffers: shared hit=214
+Planning Time: 0.322 ms
+Execution Time: 33.632 ms
+=== R23 run 2 ===
+GroupAggregate  (cost=1469.92..17874.96 rows=97825 width=20) (actual time=4.380..29.198 rows=60.00 loops=1)
+  Group Key: city_id, (date_trunc('month'::text, requested_at))
+  Buffers: shared hit=2592
+  ->  Incremental Sort  (cost=1469.92..15918.46 rows=97825 width=16) (actual time=4.225..25.430 rows=99450.00 loops=1)
+        Sort Key: city_id, (date_trunc('month'::text, requested_at)), rider_id
+        Presorted Key: city_id
+        Full-sort Groups: 10  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+        Pre-sorted Groups: 10  Sort Method: quicksort  Average Memory: 1006kB  Peak Memory: 1007kB
+        Buffers: shared hit=2592
+        ->  Index Only Scan using idx_trips_city_month_rider on trips  (cost=0.42..8211.61 rows=97825 width=16) (actual time=0.035..10.127 rows=99450.00 loops=1)
+              Index Cond: (requested_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone)
+              Heap Fetches: 11249
+              Index Searches: 11
+              Buffers: shared hit=2586
+Planning:
+  Buffers: shared hit=214
+Planning Time: 0.309 ms
+Execution Time: 29.226 ms
+=== R23 run 3 ===
+GroupAggregate  (cost=1469.92..17874.96 rows=97825 width=20) (actual time=4.221..29.173 rows=60.00 loops=1)
+  Group Key: city_id, (date_trunc('month'::text, requested_at))
+  Buffers: shared hit=2592
+  ->  Incremental Sort  (cost=1469.92..15918.46 rows=97825 width=16) (actual time=4.072..25.632 rows=99450.00 loops=1)
+        Sort Key: city_id, (date_trunc('month'::text, requested_at)), rider_id
+        Presorted Key: city_id
+        Full-sort Groups: 10  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+        Pre-sorted Groups: 10  Sort Method: quicksort  Average Memory: 1006kB  Peak Memory: 1007kB
+        Buffers: shared hit=2592
+        ->  Index Only Scan using idx_trips_city_month_rider on trips  (cost=0.42..8211.61 rows=97825 width=16) (actual time=0.042..10.382 rows=99450.00 loops=1)
+              Index Cond: (requested_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone)
+              Heap Fetches: 11249
+              Index Searches: 11
+              Buffers: shared hit=2586
+Planning:
+  Buffers: shared hit=214
+Planning Time: 0.400 ms
+Execution Time: 29.210 ms
