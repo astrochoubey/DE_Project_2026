@@ -1,0 +1,31 @@
+query_id,type,avg_ms,median_ms,min_ms,max_ms,scan_nodes
+R01,READ,9.614,9.451,7.345,12.045,Seq Scan on trips
+R02,READ,9.171,8.760,8.714,10.039,Seq Scan on trips
+R03,READ,6.823,6.345,6.325,7.800,Seq Scan on riders
+R04,READ,6.718,6.777,6.523,6.853,Seq Scan on trips | Seq Scan on cities
+R05,READ,14.121,15.053,11.540,15.771,Seq Scan on trips
+R06,READ,13.027,11.264,10.975,16.842,Seq Scan on trips | Seq Scan on cities
+R07,READ,12.059,11.401,10.794,13.983,Seq Scan on trips | Seq Scan on drivers | Seq Scan on cities
+R08,READ,28.336,28.148,28.109,28.752,Seq Scan on payments
+R09,READ,16.869,16.876,16.691,17.040,Seq Scan on riders | Seq Scan on trips
+R10,READ,11.370,11.354,11.239,11.517,Seq Scan on drivers | Seq Scan on trips
+R11,READ,30.298,30.221,29.987,30.687,Seq Scan on trips | Seq Scan on ratings
+R12,READ,29.969,30.116,29.616,30.175,Seq Scan on trips | Seq Scan on cities
+R13,READ,8.893,8.858,8.835,8.987,Seq Scan on riders
+R14,READ,0.030,0.030,0.030,0.031,Index Scan using vehicles_registration_no_key on vehicles | Index Scan using drivers_pkey on drivers
+R15,READ,0.067,0.067,0.066,0.069,Index Scan using trips_pkey on trips | Index Scan using riders_pkey on riders | Index Scan using drivers_pkey on drivers | Index Scan using vehicles_pkey on vehicles | Index Scan using payments_trip_id_key on payments
+R16,READ,22.398,22.626,21.207,23.362,Index Scan using trips_pkey on trips
+R17,READ,24.243,24.838,22.987,24.904,Seq Scan on trips | Seq Scan on cities
+R18,READ,15734.993,15721.078,15596.692,15887.210,Seq Scan on riders | Seq Scan on trips
+R19,READ,10.716,10.562,10.258,11.327,Seq Scan on trips | Seq Scan on drivers
+R20,READ,12.995,13.058,12.738,13.190,Seq Scan on trips
+R21,READ,18.564,18.580,18.489,18.624,Seq Scan on trips | Seq Scan on promo_codes
+R22,READ,8.814,6.274,6.273,13.895,Seq Scan on payments | Index Scan using trips_pkey on trips | Index Scan using riders_pkey on riders
+R23,READ,50.763,50.432,50.074,51.782,Seq Scan on trips
+R24,READ,10.812,10.820,10.791,10.824,Seq Scan on trips
+R25,READ,16.477,16.586,16.006,16.840,Seq Scan on trips
+W01,WRITE,0.629,0.560,0.529,0.799,(no scan)
+W02,WRITE,24.603,24.424,24.281,25.104,Index Scan using trips_pkey on trips
+W03,WRITE,3.511,3.604,3.056,3.873,Seq Scan on drivers
+W04,WRITE,29.224,29.738,28.122,29.813,(no scan)
+W05,WRITE,29.639,29.578,29.140,30.198,Seq Scan on trips
