@@ -178,11 +178,18 @@ SET search_path TO uber;
 ANALYZE;
 ```
 
-Then verify the row counts match the table above, and run at least **3 integrity checks** of your own (e.g. "every completed trip has exactly one payment", "no trip has a vehicle that belongs to a different driver"). Paste the results into `docs/02_schema_design.md`.
+Then verify the row counts match the table above and run the integrity checks in `sql/03_verify_data.sql`:
+
+```bash
+psql -d <your_database> -f sql/03_verify_data.sql
+```
+
+Paste the results into `docs/02_schema_design.md`.
 
 ### Phase 2 deliverables
 - `sql/01_schema.sql`: runs top-to-bottom on an empty database without errors
 - `sql/02_load_data.sql`: loads all 8 files without errors
+- `sql/03_verify_data.sql`: verifies row counts, referential integrity, and business invariants
 - `docs/02_schema_design.md`: data dictionary (table · column · type · constraint · *why*), ER diagram, FDs and normal form per table, integrity-check results, and every data problem you found
 
 ---
@@ -356,6 +363,7 @@ uber-dbms-<team-no>/
 ├── sql/
 │   ├── 01_schema.sql
 │   ├── 02_load_data.sql
+│   ├── 03_verify_data.sql
 │   ├── 05_indexes.sql
 │   ├── 06_optimized_queries.sql
 │   └── 08_partitioning.sql
