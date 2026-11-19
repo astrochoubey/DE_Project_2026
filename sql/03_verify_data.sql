@@ -43,3 +43,21 @@ SELECT
     count(*) FILTER (WHERE drop_lat < 8.0 OR drop_lat > 37.0 OR drop_lng < 68.0 OR drop_lng > 97.0) AS out_of_bounds_drops,
     count(*) FILTER (WHERE status = 'COMPLETED' AND (fare_amount IS NULL OR distance_km IS NULL OR duration_min IS NULL)) AS incomplete_completed_trips
 FROM trips;
+
+-- 4. Promotional Lifecycle & Rating Audit
+SELECT
+    (SELECT count(*) FROM trips t JOIN promo_codes p ON t.promo_code = p.promo_code WHERE t.requested_at::date < p.valid_from OR t.requested_at::date > p.valid_to) AS expired_promo_violations,
+    (SELECT count(*) FROM ratings r LEFT JOIN trips t ON r.trip_id = t.trip_id WHERE t.status != 'COMPLETED') AS uncompleted_trip_ratings,
+    (SELECT count(*) FROM ratings WHERE stars < 1 OR stars > 5) AS invalid_star_ratings,
+    (SELECT count(*) FROM trips WHERE status = 'COMPLETED' AND fare_amount <= 0) AS zero_or_negative_completed_fares;
+
+-- 5. Fleet Registration & Assignment Consistency
+SELECT
+    (SELECT count(*) FROM vehicles v LEFT JOIN drivers d ON v.driver_id = d.driver_id WHERE d.driver_id IS NULL) AS orphan_vehicles,
+    (SELECT count(*) FROM trips WHERE driver_id IS NULL AND status IN ('ACCEPTED', 'ONGOING', 'COMPLETED')) AS missing_driver_on_assigned_trips;
+
+-- 6. Promo Discount Limits Validation
+SELECT
+    count(*) FILTER (WHERE discount_pct <= 0 OR discount_pct > 100) AS invalid_discount_pct,
+    count(*) FILTER (WHERE max_discount <= 0) AS invalid_max_discount
+FROM promo_codes;

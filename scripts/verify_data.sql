@@ -14,3 +14,15 @@ SELECT 'completed_without_payment' AS check_name, count(*) AS violations
 FROM trips t
 LEFT JOIN payments p ON t.trip_id = p.trip_id
 WHERE t.status = 'COMPLETED' AND p.payment_id IS NULL;
+
+SELECT 'future_signups' AS check_name, count(*) AS violations
+FROM riders
+WHERE signup_date > CURRENT_DATE;
+
+SELECT 'unrated_driver_ratings' AS check_name, count(*) AS violations
+FROM drivers
+WHERE driver_rating < 1.0 OR driver_rating > 5.0;
+
+SELECT 'active_promo_dates' AS check_name, count(*) AS violations
+FROM promo_codes
+WHERE valid_to < valid_from;
