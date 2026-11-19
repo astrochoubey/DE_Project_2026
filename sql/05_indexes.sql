@@ -80,3 +80,20 @@ CREATE INDEX IF NOT EXISTS idx_trips_city_month_rider
 -- -------------------------------------------------------------------
 CREATE INDEX IF NOT EXISTS idx_ratings_rated_by_trip
     ON uber.ratings (rated_by, trip_id);
+
+-- -------------------------------------------------------------------
+-- R24/R25 Fraud checks – Completed trips by fare amount.
+-- Partial index avoiding scanning uncompleted or cancelled trips.
+-- -------------------------------------------------------------------
+CREATE INDEX IF NOT EXISTS idx_trips_completed_fare
+    ON uber.trips (status, fare_amount)
+    WHERE status = 'COMPLETED';
+
+-- -------------------------------------------------------------------
+-- R09/R18 Location filtering – Rider lookup by home city.
+-- Accelerates foreign key joins from riders on home_city_id.
+-- -------------------------------------------------------------------
+CREATE INDEX IF NOT EXISTS idx_riders_city
+    ON uber.riders (home_city_id);
+
+ANALYZE;

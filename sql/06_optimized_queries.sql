@@ -23,7 +23,7 @@
 SET search_path TO uber;
 BEGIN;
 
--- @R18_OPT
+-- @R18
 -- CRM: last trip date of every rider in Pune
 -- ORIGINAL: correlated scalar subquery – fired once per Pune rider,
 --   causing a full Seq Scan of trips for each rider → 15 734 ms.
@@ -40,7 +40,7 @@ LEFT JOIN (
 WHERE r.home_city_id = 6
 ORDER BY t_agg.last_trip_at DESC NULLS LAST;
 
--- @R09_OPT
+-- @R09
 -- Marketing: Bengaluru riders with no trip since 1 April 2026
 -- ORIGINAL: NOT IN (subquery) – unsafe when subquery returns a NULL
 --   (NOT IN returns NULL/unknown for every row if any trip has rider_id NULL).
@@ -57,7 +57,7 @@ WHERE r.home_city_id = 1
         AND t.requested_at >= '2026-04-01'
   );
 
--- @R10_OPT
+-- @R10
 -- Driver ops: active drivers with no trip since 25 June 2026
 -- ORIGINAL: NOT IN (subquery) – same NULL-safety issue as R09.
 -- FIX: NOT EXISTS, same reasoning.
@@ -71,7 +71,7 @@ WHERE d.status = 'ACTIVE'
         AND t.requested_at >= '2026-06-25'
   );
 
--- @R20_OPT
+-- @R20
 -- Finance: daily revenue and running total for May 2026
 -- ORIGINAL: requested_at::date in both SELECT and WHERE – the cast in
 --   WHERE prevents the planner from using a range index on requested_at.
@@ -89,4 +89,5 @@ FROM (
 ) daily
 ORDER BY day;
 
+-- @END
 ROLLBACK;
