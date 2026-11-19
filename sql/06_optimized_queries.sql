@@ -12,6 +12,8 @@
 --   R09 – NOT IN (subquery)  → NOT EXISTS        (safer with NULLs, faster)
 --   R10 – NOT IN (subquery)  → NOT EXISTS        (same reasoning as R09)
 --   R20 – requested_at::date cast → range filter (allows index on requested_at)
+--   R16 – OFFSET deep pagination → deferred join via primary key
+--   R07 – pre-join filter & aggregation push-down
 --
 -- HOW TO TEST
 --   psql -d capstone -f sql/06_optimized_queries.sql
@@ -88,6 +90,42 @@ FROM (
     GROUP BY 1
 ) daily
 ORDER BY day;
+
+-- @R16
+-- Admin panel: "All trips" table, page 8,001 (25 rows per page)
+-- ORIGINAL: OFFSET 200000 LIMIT 25 on SELECT * retrieves all columns
+--   for 200,025 tuples before discarding 200,000.
+-- FIX: Deferred join. The subquery operates as an Index Only Scan on trips_pkey
+--   to resolve the 25 target IDs, then joins back to fetch full attributes.
+SELECT t.trip_id, t.rider_id, t.driver_id, t.city_id, t.status, t.fare_amount, t.requested_at
+FROM (
+    SELECT trip_id
+    FROM trips
+    ORDER BY trip_id DESC
+    OFFSET 200000
+    LIMIT 25
+) p
+JOIN trips t ON t.trip_id = p.trip_id
+ORDER BY t.trip_id DESC;
+
+-- @R07
+-- Top 10 earning drivers in Mumbai, Q1 2026
+-- ORIGINAL: Joins drivers, trips, and cities before aggregation, creating
+--   large intermediate join cardinality.
+-- FIX: Push-down aggregation: aggregate trips by driver_id first within
+--   Mumbai's city_id (2) and Q1 2026, then join the top candidates with drivers.
+SELECT d.driver_id, d.full_name, t_agg.trips, t_agg.earnings
+FROM (
+    SELECT driver_id, count(*) AS trips, sum(fare_amount) AS earnings
+    FROM trips
+    WHERE city_id = 2
+      AND status = 'COMPLETED'
+      AND requested_at >= '2026-01-01' AND requested_at < '2026-04-01'
+    GROUP BY driver_id
+) t_agg
+JOIN drivers d ON d.driver_id = t_agg.driver_id
+ORDER BY t_agg.earnings DESC
+LIMIT 10;
 
 -- @END
 ROLLBACK;
