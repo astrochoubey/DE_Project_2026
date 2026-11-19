@@ -1,14 +1,14 @@
 {
-  "team_number": "",
+  "team_number": "T0141",
   "group_lead": {
     "name": "Prachi Choubey",
-    "enrollment_no": "",
+    "enrollment_no": "2501010337",
     "github": "astrochoubey"
   },
   "members": [
-    { "name": "", "enrollment_no": "", "github": "" },
-    { "name": "", "enrollment_no": "", "github": "" },
-    { "name": "", "enrollment_no": "", "github": "" }
+    { "name": "Kushagra Sharma", "enrollment_no": "2501010240", "github": "nottkushagra" },
+    { "name": "Priyanshu Srivastava", "enrollment_no": "2501010644", "github": "Priyanshuuu777" },
+    { "name": "Nitya Pawar", "enrollment_no": "2501010683", "github": "nityapawar495-sys" }
   ],
   "postgres_version": "18",
   "laptop_used_for_benchmarks": "Apple MacBook"
