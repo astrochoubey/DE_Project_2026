@@ -1,0 +1,93 @@
+=== R06 run 1 ===
+Sort  (cost=6708.86..6708.89 rows=10 width=15) (actual time=9.158..9.159 rows=10.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=330 read=109
+  ->  HashAggregate  (cost=6708.60..6708.70 rows=10 width=15) (actual time=9.148..9.149 rows=10.00 loops=1)
+        Group Key: c.city_name
+        Batches: 1  Memory Usage: 32kB
+        Buffers: shared hit=327 read=109
+        ->  Hash Join  (cost=514.55..6642.39 rows=13242 width=7) (actual time=6.372..8.391 rows=13241.00 loops=1)
+              Hash Cond: (t.city_id = c.city_id)
+              Buffers: shared hit=327 read=109
+              ->  Bitmap Heap Scan on trips t  (cost=513.33..6591.67 rows=13242 width=4) (actual time=6.362..7.639 rows=13241.00 loops=1)
+                    Recheck Cond: ((requested_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (requested_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Filter: ((status)::text = 'COMPLETED'::text)
+                    Rows Removed by Filter: 3242
+                    Heap Blocks: exact=308
+                    Buffers: shared hit=326 read=109
+                    ->  Bitmap Index Scan on idx_trips_city_month_rider  (cost=0.00..510.02 rows=16134 width=0) (actual time=6.339..6.339 rows=16483.00 loops=1)
+                          Index Cond: ((requested_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (requested_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                          Index Searches: 11
+                          Buffers: shared hit=18 read=109
+              ->  Hash  (cost=1.10..1.10 rows=10 width=11) (actual time=0.006..0.006 rows=10.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on cities c  (cost=0.00..1.10 rows=10 width=11) (actual time=0.002..0.003 rows=10.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=360
+Planning Time: 0.505 ms
+Execution Time: 9.197 ms
+=== R06 run 2 ===
+Sort  (cost=6708.86..6708.89 rows=10 width=15) (actual time=3.031..3.032 rows=10.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=439
+  ->  HashAggregate  (cost=6708.60..6708.70 rows=10 width=15) (actual time=3.022..3.023 rows=10.00 loops=1)
+        Group Key: c.city_name
+        Batches: 1  Memory Usage: 32kB
+        Buffers: shared hit=436
+        ->  Hash Join  (cost=514.55..6642.39 rows=13242 width=7) (actual time=0.360..2.277 rows=13241.00 loops=1)
+              Hash Cond: (t.city_id = c.city_id)
+              Buffers: shared hit=436
+              ->  Bitmap Heap Scan on trips t  (cost=513.33..6591.67 rows=13242 width=4) (actual time=0.351..1.554 rows=13241.00 loops=1)
+                    Recheck Cond: ((requested_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (requested_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Filter: ((status)::text = 'COMPLETED'::text)
+                    Rows Removed by Filter: 3242
+                    Heap Blocks: exact=308
+                    Buffers: shared hit=435
+                    ->  Bitmap Index Scan on idx_trips_city_month_rider  (cost=0.00..510.02 rows=16134 width=0) (actual time=0.329..0.329 rows=16483.00 loops=1)
+                          Index Cond: ((requested_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (requested_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                          Index Searches: 11
+                          Buffers: shared hit=127
+              ->  Hash  (cost=1.10..1.10 rows=10 width=11) (actual time=0.005..0.006 rows=10.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on cities c  (cost=0.00..1.10 rows=10 width=11) (actual time=0.002..0.003 rows=10.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=360
+Planning Time: 0.703 ms
+Execution Time: 3.070 ms
+=== R06 run 3 ===
+Sort  (cost=6708.86..6708.89 rows=10 width=15) (actual time=3.233..3.234 rows=10.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=439
+  ->  HashAggregate  (cost=6708.60..6708.70 rows=10 width=15) (actual time=3.224..3.225 rows=10.00 loops=1)
+        Group Key: c.city_name
+        Batches: 1  Memory Usage: 32kB
+        Buffers: shared hit=436
+        ->  Hash Join  (cost=514.55..6642.39 rows=13242 width=7) (actual time=0.473..2.478 rows=13241.00 loops=1)
+              Hash Cond: (t.city_id = c.city_id)
+              Buffers: shared hit=436
+              ->  Bitmap Heap Scan on trips t  (cost=513.33..6591.67 rows=13242 width=4) (actual time=0.464..1.726 rows=13241.00 loops=1)
+                    Recheck Cond: ((requested_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (requested_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Filter: ((status)::text = 'COMPLETED'::text)
+                    Rows Removed by Filter: 3242
+                    Heap Blocks: exact=308
+                    Buffers: shared hit=435
+                    ->  Bitmap Index Scan on idx_trips_city_month_rider  (cost=0.00..510.02 rows=16134 width=0) (actual time=0.440..0.440 rows=16483.00 loops=1)
+                          Index Cond: ((requested_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (requested_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                          Index Searches: 11
+                          Buffers: shared hit=127
+              ->  Hash  (cost=1.10..1.10 rows=10 width=11) (actual time=0.005..0.005 rows=10.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on cities c  (cost=0.00..1.10 rows=10 width=11) (actual time=0.002..0.002 rows=10.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=360
+Planning Time: 0.451 ms
+Execution Time: 3.273 ms

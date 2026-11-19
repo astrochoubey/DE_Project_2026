@@ -1,0 +1,51 @@
+=== R02 run 1 ===
+GroupAggregate  (cost=5.19..288.51 rows=1 width=44) (actual time=0.458..0.459 rows=1.00 loops=1)
+  Buffers: shared hit=75 read=3
+  ->  Bitmap Heap Scan on trips  (cost=5.19..288.49 rows=1 width=10) (actual time=0.420..0.450 rows=5.00 loops=1)
+        Recheck Cond: ((driver_id = 217) AND ((status)::text = 'COMPLETED'::text))
+        Filter: ((date(requested_at) >= '2026-03-01'::date) AND (date(requested_at) <= '2026-03-31'::date))
+        Rows Removed by Filter: 70
+        Heap Blocks: exact=75
+        Buffers: shared hit=75 read=3
+        ->  Bitmap Index Scan on idx_trips_driver_status_date  (cost=0.00..5.19 rows=77 width=0) (actual time=0.310..0.310 rows=75.00 loops=1)
+              Index Cond: ((driver_id = 217) AND ((status)::text = 'COMPLETED'::text))
+              Index Searches: 1
+              Buffers: shared read=3
+Planning:
+  Buffers: shared hit=217
+Planning Time: 0.508 ms
+Execution Time: 0.491 ms
+=== R02 run 2 ===
+GroupAggregate  (cost=5.19..288.51 rows=1 width=44) (actual time=0.197..0.197 rows=1.00 loops=1)
+  Buffers: shared hit=78
+  ->  Bitmap Heap Scan on trips  (cost=5.19..288.49 rows=1 width=10) (actual time=0.153..0.187 rows=5.00 loops=1)
+        Recheck Cond: ((driver_id = 217) AND ((status)::text = 'COMPLETED'::text))
+        Filter: ((date(requested_at) >= '2026-03-01'::date) AND (date(requested_at) <= '2026-03-31'::date))
+        Rows Removed by Filter: 70
+        Heap Blocks: exact=75
+        Buffers: shared hit=78
+        ->  Bitmap Index Scan on idx_trips_driver_status_date  (cost=0.00..5.19 rows=77 width=0) (actual time=0.014..0.014 rows=75.00 loops=1)
+              Index Cond: ((driver_id = 217) AND ((status)::text = 'COMPLETED'::text))
+              Index Searches: 1
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=217
+Planning Time: 0.457 ms
+Execution Time: 0.228 ms
+=== R02 run 3 ===
+GroupAggregate  (cost=5.19..288.51 rows=1 width=44) (actual time=0.162..0.162 rows=1.00 loops=1)
+  Buffers: shared hit=78
+  ->  Bitmap Heap Scan on trips  (cost=5.19..288.49 rows=1 width=10) (actual time=0.125..0.154 rows=5.00 loops=1)
+        Recheck Cond: ((driver_id = 217) AND ((status)::text = 'COMPLETED'::text))
+        Filter: ((date(requested_at) >= '2026-03-01'::date) AND (date(requested_at) <= '2026-03-31'::date))
+        Rows Removed by Filter: 70
+        Heap Blocks: exact=75
+        Buffers: shared hit=78
+        ->  Bitmap Index Scan on idx_trips_driver_status_date  (cost=0.00..5.19 rows=77 width=0) (actual time=0.012..0.013 rows=75.00 loops=1)
+              Index Cond: ((driver_id = 217) AND ((status)::text = 'COMPLETED'::text))
+              Index Searches: 1
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=217
+Planning Time: 0.474 ms
+Execution Time: 0.186 ms

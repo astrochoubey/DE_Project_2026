@@ -408,7 +408,7 @@ The schema implements 25 declarative constraints:
 21. `chk_trips_fare`: `fare_amount IS NULL OR fare_amount >= 0` (Non-negative gross fare).
 22. `chk_trips_status`: `status IN ('REQUESTED', 'ACCEPTED', 'ONGOING', 'COMPLETED', 'CANCELLED_BY_RIDER', 'CANCELLED_BY_DRIVER')` (Valid state transitions).
 23. `chk_trips_timeline_pickup`: `pickup_at IS NULL OR pickup_at >= requested_at` (Pickup cannot precede booking time).
-24. `chk_trips_timeline_dropoff`: `dropoff_at IS NULL OR pickup_at IS NULL OR dropoff_at >= pickup_at` (Drop-off cannot precede pickup time).
+24. `chk_trips_timeline_dropoff`: `dropoff_at IS NULL OR (pickup_at IS NOT NULL AND dropoff_at >= pickup_at)` (Drop-off cannot precede pickup time; drop-off requires a valid pickup timestamp).
 25. `chk_trips_completed_integrity`: Completed trips must have non-null driver, vehicle, pickup, drop-off, distance, duration, and fare.
 26. `chk_payments_amount`: `amount >= 0` (Settlement amount must be non-negative).
 27. `chk_payments_method`: `method IN ('UPI', 'CASH', 'CARD', 'WALLET')` (Allowed payment gateways).

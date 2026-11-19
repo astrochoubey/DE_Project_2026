@@ -1,0 +1,54 @@
+=== R10 run 1 ===
+Seq Scan on drivers d  (cost=5291.74..5373.74 rows=1354 width=20) (actual time=0.669..0.669 rows=0.00 loops=1)
+  Filter: ((NOT (ANY (driver_id = (hashed SubPlan 1).col1))) AND ((status)::text = 'ACTIVE'::text))
+  Rows Removed by Filter: 3000
+  Buffers: shared hit=163
+  SubPlan 1
+    ->  Bitmap Heap Scan on trips t  (cost=117.97..5283.58 rows=3266 width=4) (actual time=0.110..0.271 rows=3296.00 loops=1)
+          Recheck Cond: (requested_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+          Heap Blocks: exact=61
+          Buffers: shared hit=126
+          ->  Bitmap Index Scan on idx_trips_city_month_rider  (cost=0.00..117.15 rows=3266 width=0) (actual time=0.104..0.104 rows=3296.00 loops=1)
+                Index Cond: (requested_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+                Index Searches: 11
+                Buffers: shared hit=65
+Planning:
+  Buffers: shared hit=236
+Planning Time: 0.393 ms
+Execution Time: 0.699 ms
+=== R10 run 2 ===
+Seq Scan on drivers d  (cost=5291.74..5373.74 rows=1354 width=20) (actual time=0.669..0.669 rows=0.00 loops=1)
+  Filter: ((NOT (ANY (driver_id = (hashed SubPlan 1).col1))) AND ((status)::text = 'ACTIVE'::text))
+  Rows Removed by Filter: 3000
+  Buffers: shared hit=163
+  SubPlan 1
+    ->  Bitmap Heap Scan on trips t  (cost=117.97..5283.58 rows=3266 width=4) (actual time=0.110..0.273 rows=3296.00 loops=1)
+          Recheck Cond: (requested_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+          Heap Blocks: exact=61
+          Buffers: shared hit=126
+          ->  Bitmap Index Scan on idx_trips_city_month_rider  (cost=0.00..117.15 rows=3266 width=0) (actual time=0.104..0.104 rows=3296.00 loops=1)
+                Index Cond: (requested_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+                Index Searches: 11
+                Buffers: shared hit=65
+Planning:
+  Buffers: shared hit=236
+Planning Time: 0.392 ms
+Execution Time: 0.699 ms
+=== R10 run 3 ===
+Seq Scan on drivers d  (cost=5291.74..5373.74 rows=1354 width=20) (actual time=0.809..0.809 rows=0.00 loops=1)
+  Filter: ((NOT (ANY (driver_id = (hashed SubPlan 1).col1))) AND ((status)::text = 'ACTIVE'::text))
+  Rows Removed by Filter: 3000
+  Buffers: shared hit=163
+  SubPlan 1
+    ->  Bitmap Heap Scan on trips t  (cost=117.97..5283.58 rows=3266 width=4) (actual time=0.159..0.343 rows=3296.00 loops=1)
+          Recheck Cond: (requested_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+          Heap Blocks: exact=61
+          Buffers: shared hit=126
+          ->  Bitmap Index Scan on idx_trips_city_month_rider  (cost=0.00..117.15 rows=3266 width=0) (actual time=0.149..0.150 rows=3296.00 loops=1)
+                Index Cond: (requested_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+                Index Searches: 11
+                Buffers: shared hit=65
+Planning:
+  Buffers: shared hit=236
+Planning Time: 0.449 ms
+Execution Time: 0.848 ms
